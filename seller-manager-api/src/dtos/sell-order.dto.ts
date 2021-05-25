@@ -6,7 +6,7 @@ export class SellOrderDto {
   internalOrderNumber: string;
   sellerStore: string;
   shippingMethod: number;
-  externalOrderNumber: number;
+  externalOrderNumber: string;
   buyerFullName: string;
   buyerPhoneNumber: number;
   buyerEmail: string;

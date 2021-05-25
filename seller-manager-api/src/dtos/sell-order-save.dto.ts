@@ -16,8 +16,8 @@ export class SellOrderSaveDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsNumber()
-  externalOrderNumber: number;
+  @IsString()
+  externalOrderNumber: string;
 
   @ApiProperty()
   @IsNotEmpty()

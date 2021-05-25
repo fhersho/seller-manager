@@ -14,6 +14,7 @@ import {
 import { MelonnService } from "./melonn.service";
 import { ShippingMethodDto } from "../dtos/shipping-method.dto";
 import { PromiseParameterCasesDto } from "../dtos/promise-parameter-cases.dto";
+import { SellOrderListDto } from "../dtos/sell-order-list.dto";
 
 
 const optionsGet = {
@@ -33,8 +34,8 @@ export class SellOrderService {
     // get datetime
     const nowDateTime = new Date();
 
-    const orders = this.storage.getOrders();
-    const order = await orders.filter(order => order.externalOrderNumber === sellOrderSaveDto.externalOrderNumber);
+    const orders = await this.storage.getOrders();
+    const order = orders.filter(order => order.externalOrderNumber === sellOrderSaveDto.externalOrderNumber);
 
     if (order.length > 0) {
       throw new NotFoundException("the external order number already exists");
@@ -59,10 +60,10 @@ export class SellOrderService {
     //get next business days
     const nextBusinessDays = await this.getNextBusinessDays(nowDateTime);
 
-    if (!(await this.canCalculatePromises(sellOrderDto, shippingMethod, nextBusinessDays, nowDateTime))) {
-      return sellOrderDto;
+    if (await this.canCalculatePromises(sellOrderDto, shippingMethod, nextBusinessDays, nowDateTime)) {
+      sellOrderDto = await this.calculatePromises(sellOrderDto, shippingMethod, 1, nextBusinessDays, nowDateTime);
     }
-    sellOrderDto = await this.calculatePromises(sellOrderDto, shippingMethod, 1, nextBusinessDays, nowDateTime);
+
     await this.storage.save(sellOrderDto);
 
     return sellOrderDto;
@@ -193,11 +194,11 @@ export class SellOrderService {
     return [];
   }
 
-  async getAll(): Promise<SellOrderDto[]> {
+  async getAll(): Promise<SellOrderListDto[]> {
     return this.storage.getOrders();
   }
 
-  async getByExternalOrderNumber(externalOrderNumber: number): Promise<SellOrderDto> {
+  async getByExternalOrderNumber(externalOrderNumber: string): Promise<SellOrderDto> {
     return this.storage.getByExternalOrderNumber(externalOrderNumber);
   }
 }

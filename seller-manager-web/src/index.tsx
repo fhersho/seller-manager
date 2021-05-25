@@ -5,6 +5,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import SellerOrderList from "./Components/SellerOrder/SellerOrderList";
 import SellerOrderForm from "./Components/SellerOrder/SellerOrderForm";
 import 'bootswatch/dist/pulse/bootstrap.min.css'
+
 import './index.css';
 import NavBar from "./Components/Navbar/Navbar";
 

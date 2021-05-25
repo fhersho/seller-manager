@@ -1,13 +1,20 @@
 import React, {Component, useEffect} from 'react';
 import {OrderList} from "../../models/OrderList";
+import SellerOrderDetail from "./SellerOrderDetail";
 interface Props {
     order: OrderList
 }
 const SellerOrderItem = ({order}: Props) => {
     return (
-        <div>
-            <h1>{order.externalOrderNumber}</h1>
-        </div>
+        <tr>
+            <th scope="row">{order.externalOrderNumber}</th>
+            <td>{order.sellerStore}</td>
+            <td>{order.creationDate}</td>
+            <td>{order.shippingMethod}</td>
+            <dt>
+                <SellerOrderDetail id={order.externalOrderNumber}></SellerOrderDetail>
+            </dt>
+        </tr>
     );
 
 }
