@@ -45,6 +45,16 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## URLs
+
+```bash
+# url server api
+http://localhost:4000/
+
+# url server api documentation
+http://localhost:4000/api-doc
+```
+
 ## Test
 
 ```bash
